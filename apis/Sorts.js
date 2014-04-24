@@ -137,6 +137,15 @@ Sorts.Sort = function () {
 	this.meta = new Sorts.SortMeta();
 	this.sortNumber = null;
 	this.sortColumns = [];
+	this.stringify = function () {
+		var data = [];
+		var columnNum = 0;
+		while (columnNum < this.sortColumns.length) {
+			data.push(this.sortColumns[columnNum].objectify());
+			columnNum = columnNum + 1;
+		}
+		return Sorts.JSON.stringify(data);
+	}
 	return this;
 }
 Sorts.Sort.getSort = function (num) {
