@@ -69,6 +69,9 @@ Sorts.getAllSorts = function () {
 
 Sorts.SortMeta = function (name) {
 	this.name = name;
+	this.stringify = function () {
+		return Sorts.JSON.stringify({"name":this.name});
+	}
 	return this;
 }
 Sorts.SortMeta.metaNameForSort = function (name) {
@@ -89,6 +92,9 @@ Sorts.SortMeta.metaForSort = function (num) {
 Sorts.SortTerm = function (termName) {
 	this.text = termName;
 	this.isBold = false;
+	this.objectify = function () {
+		return {"text":this.text,"isBold":this.isBold};
+	}
 	return this;
 }
 Sorts.SortTerm.termFromData = function (termData) {
@@ -102,6 +108,15 @@ Sorts.SortColumn = function (columnName) {
 	this.terms = [];
 	this.addTerm = function (term) {
 		this.terms.push(term);
+	}
+	this.objectify = function () {
+		var data = {"name":this.name,"terms":[]};
+		var termNum = 0;
+		while (termNum < this.terms.length) {
+			data["terms"].push(this.terms[termNum].objectify());
+			termNum = termNum + 1;
+		}
+		return data;
 	}
 	return this;
 }
