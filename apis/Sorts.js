@@ -153,8 +153,14 @@ Sorts.removeSort = function (num) {
 	}
 	var removed;
 	if (current.parseData) {
-		if (current.parseData.indexOf(Sorts.getSortName(num)) == -1) {
+		if (current.parseData.indexOf(num) == -1) {
 			return new Error("There is no such sort as sort "+num);
 		}
+		current.parseData.splice(current.parseData.indexOf(num), 1);
+	} else {
+		return new Error("There is no such sort as sort "+num);
 	}
+	localStorage.removeItem(Sorts.getSortName(num));
+	localStorage.removeItem(Sorts.SortMeta.metaNameForSort(Sorts.getSortName(num)));
+	localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
 }
