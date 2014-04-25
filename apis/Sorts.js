@@ -188,3 +188,7 @@ Sorts.removeSort = function (num) {
 	localStorage.removeItem(Sorts.SortMeta.metaNameForSort(Sorts.getSortName(num)));
 	localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
 }
+
+Sorts.saveSort = function (sort) {
+	
+}
