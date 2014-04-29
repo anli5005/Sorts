@@ -190,5 +190,16 @@ Sorts.removeSort = function (num) {
 }
 
 Sorts.saveSort = function (sort) {
-	
+	if (sort.sortNumber) {
+		if (Sorts.getAllSorts().parseData) {
+			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
+				// Save the sort
+				localStorage.setItem(Sorts.getSortName(sort.sortNumber), sort.stringify());
+				localStorage.setItem(
+					Sorts.SortMeta.metaNameForSort(Sorts.getSortName(sort.sortNumber)),
+					sort.meta.stringify()
+				);
+			}
+		}
+	}
 }
