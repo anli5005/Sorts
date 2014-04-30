@@ -64,7 +64,11 @@ Sorts.getSortName = function (num) {
 }
 
 Sorts.getAllSorts = function () {
-	return Sorts.JSON.parse(localStorage.getItem("sort_all"));
+	if (localStorage.getItem("sort_all")) {
+		return Sorts.JSON.parse(localStorage.getItem("sort_all"));
+	} else {
+		return new Sorts.ParsedData();
+	}
 }
 
 Sorts.SortMeta = function (name) {
@@ -211,7 +215,11 @@ Sorts.saveSort = function (sort) {
 		var current, saveIndex;
 		if (allSorts.parseData) {
 			current = allSorts.parseData;
-			saveIndex = allSorts.parseData.length;
+			var i = 0;
+			while (current.indexOf(i) > -1) {
+				i++;
+			}
+			saveIndex = i;
 		} else if (allSorts.error) {
 			return allSorts.error;
 		} else {
