@@ -199,7 +199,32 @@ Sorts.saveSort = function (sort) {
 					Sorts.SortMeta.metaNameForSort(Sorts.getSortName(sort.sortNumber)),
 					sort.meta.stringify()
 				);
+			} else {
+				return new Error("No such sort exists");
 			}
+		} else {
+			return Sorts.getAllSorts().error;
 		}
+	} else {
+		// Create the sort
+		var allSorts = Sorts.getAllSorts();
+		var current, saveIndex;
+		if (allSorts.parseData) {
+			current = allSorts.parseData;
+			saveIndex = allSorts.parseData.length;
+		} else if (allSorts.error) {
+			return allSorts.error;
+		} else {
+			current = [];
+			saveIndex = 0;
+		}
+		current.push(saveIndex);
+		localStorage.sort_all = Sorts.JSON.stringify(current);
+		sort.sortNumber = saveIndex;
+		var err = Sorts.saveSort(sort);
+		if (err) {
+			return err;
+		}
+		return saveIndex;
 	}
 }
