@@ -64,7 +64,11 @@ Sorts.getSortName = function (num) {
 }
 
 Sorts.getAllSorts = function () {
-	return Sorts.JSON.parse(localStorage.getItem("sort_all"));
+	if (localStorage.getItem("sort_all")) {
+		return Sorts.JSON.parse(localStorage.getItem("sort_all"));
+	} else {
+		return new Sorts.ParsedData();
+	}
 }
 
 Sorts.SortMeta = function (name) {
@@ -190,5 +194,45 @@ Sorts.removeSort = function (num) {
 }
 
 Sorts.saveSort = function (sort) {
-	
+	if (sort.sortNumber) {
+		if (Sorts.getAllSorts().parseData) {
+			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
+				// Save the sort
+				localStorage.setItem(Sorts.getSortName(sort.sortNumber), sort.stringify());
+				localStorage.setItem(
+					Sorts.SortMeta.metaNameForSort(Sorts.getSortName(sort.sortNumber)),
+					sort.meta.stringify()
+				);
+			} else {
+				return new Error("No such sort exists");
+			}
+		} else {
+			return Sorts.getAllSorts().error;
+		}
+	} else {
+		// Create the sort
+		var allSorts = Sorts.getAllSorts();
+		var current, saveIndex;
+		if (allSorts.parseData) {
+			current = allSorts.parseData;
+			var i = 0;
+			while (current.indexOf(i) > -1) {
+				i++;
+			}
+			saveIndex = i;
+		} else if (allSorts.error) {
+			return allSorts.error;
+		} else {
+			current = [];
+			saveIndex = 0;
+		}
+		current.push(saveIndex);
+		localStorage.sort_all = Sorts.JSON.stringify(current);
+		sort.sortNumber = saveIndex;
+		var err = Sorts.saveSort(sort);
+		if (err) {
+			return err;
+		}
+		return saveIndex;
+	}
 }
