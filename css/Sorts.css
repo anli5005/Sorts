@@ -23,9 +23,23 @@ a:visited {
 	color: #0055FF;
 }
 
-a:hover, a:active, a:focus {
+a.button:visited {
+	color: #0099FF;
+}
+
+a:hover, a:active, a:focus,
+a.button:hover, a.button:active, a.button:focus {
 	color: #00CCFF;
 	text-decoration: underline;
+}
+
+table, tr, td {
+	border: none;
+	padding: 0.25em 0.25em 0.25em 0.25em;
+}
+
+table thead tr td {
+	font-weight: bold;
 }
 
 
