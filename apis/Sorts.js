@@ -194,7 +194,7 @@ Sorts.removeSort = function (num) {
 }
 
 Sorts.saveSort = function (sort) {
-	if (sort.sortNumber) {
+	if (sort.sortNumber != null) {
 		if (Sorts.getAllSorts().parseData) {
 			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
 				// Save the sort
