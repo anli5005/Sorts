@@ -1,0 +1,45 @@
+/* Reset */
+* {
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+/* Common Elements */
+body {
+	font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
+	padding: 1em 1em 1em 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 200;
+}
+
+a {
+	color: #0099FF;
+	text-decoration: none;
+}
+
+a:visited {
+	color: #0055FF;
+}
+
+a.button:visited {
+	color: #0099FF;
+}
+
+a:hover, a:active, a:focus,
+a.button:hover, a.button:active, a.button:focus {
+	color: #00CCFF;
+	text-decoration: underline;
+}
+
+table, tr, td {
+	border: none;
+	padding: 0.25em 0.25em 0.25em 0.25em;
+}
+
+table thead tr td {
+	font-weight: bold;
+}
+
+

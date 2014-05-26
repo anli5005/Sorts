@@ -153,25 +153,25 @@ Sorts.Sort = function () {
 	return this;
 }
 Sorts.Sort.getSort = function (num) {
-	var sort = new Sorts.Sort();
-	sort.sortNumber = num;
-	sort.meta = Sorts.SortMeta.metaForSort(num);
 	var json = localStorage.getItem(Sorts.getSortName(num));
 	if (json) {
 		var parsed = Sorts.JSON.parse(json);
 		if (parsed.parseData) {
+			var sort = new Sorts.Sort;
+			sort.sortNumber = num;
+			sort.meta = Sorts.SortMeta.metaForSort(num);
 			var i = 0;
 			while (i < parsed.parseData.length) {
 				sort.sortColumns.push(Sorts.SortColumn.columnFromData(parsed.parseData[i]));
 				i = i + 1;
 			}
+			return sort;
 		} else {
 			if (parsed.error) {
 				Sorts.Log.logError(parsed.error);
 			}
 		}
 	}
-	return sort;
 }
 
 Sorts.removeSort = function (num) {
@@ -194,7 +194,7 @@ Sorts.removeSort = function (num) {
 }
 
 Sorts.saveSort = function (sort) {
-	if (sort.sortNumber) {
+	if (sort.sortNumber != null) {
 		if (Sorts.getAllSorts().parseData) {
 			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
 				// Save the sort
