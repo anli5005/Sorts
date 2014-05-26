@@ -13,8 +13,7 @@
 					if (meta) {
 						var cell1 = "<td>"+meta.name+"</td>";
 						var cell2 = "<td><a href='sort/?s="+num.toString()+"' class='button'>Open</a></td>";
-						var cell3 = "<td><a href='sort/edit/?action=remove&s="+num.toString()+"' class='button'>Remove</a></td>";
-						return ($("<tr>"+cell1+cell2+cell3+"</tr>"));
+						return ($("<tr>"+cell1+cell2+"</tr>"));
 					}
 				}
 				if (all.parseData) {
@@ -24,10 +23,10 @@
 						}
 					}
 				} else if (all.error) {
-					$("#sorts").append("<tr><td colspan='3'>No Sorts</td></tr>");
+					$("#sorts").append("<tr><td colspan='2'>No Sorts</td></tr>");
 					Sorts.Log.logError(all.error);
 				} else {
-					$("#sorts").append("<tr><td colspan='3'>No Sorts</td></tr>");
+					$("#sorts").append("<tr><td colspan='2'>No Sorts</td></tr>");
 				}
 			});
 		</script>
@@ -37,10 +36,10 @@
 		<h2>Your Sorts</h2>
 		<table>
 			<thead>
-				<tr><td>Sort Name</td><td>Open</td><td>Remove</td></tr>
+				<tr><td>Sort Name</td><td>Open</td></tr>
 			</thead>
 			<tbody id="sorts">
-				<tr><td><a href="sort/edit/" class="button" colspan='3'>Create New Sort</a></td></tr>
+				<tr><td><a href="sort/edit/" class="button" colspan='2'>Create New Sort</a></td></tr>
 			</tbody>
 		</table>
 	</body>
