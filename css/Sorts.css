@@ -8,6 +8,7 @@
 body {
 	font-family: "Helvetica Neue", Helvetica, arial, sans-serif;
 	padding: 1em 1em 1em 1em;
+	margin-top: 2.5em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,4 +43,31 @@ table thead tr td {
 	font-weight: bold;
 }
 
+header {
+	position: fixed;
+	top: 0;
+	display: block;
+	background-color: rgba(255, 255, 255, 0.5);
+	padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+select {
+	width: 100%;
+	border: none;
+	border-radius: 0px;
+	background-image: none;
+	background-color: black;
+	color: white;
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	min-height: 2em;
+	font-size: 1em;
+	font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+}
+
+select.large-select {
+	padding: 0.75em 0.75em 0.75em 0.75em;
+	min-height: 3em;
+	font-size: 1.5em;
+	font-family: "Helvetica Neue", helvetica, arial, sans-serif;
+}
 

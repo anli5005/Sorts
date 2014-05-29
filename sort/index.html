@@ -10,11 +10,49 @@
 				var p = Sorts.parseParams(window.location.search);
 				if (p.parseData.s) {
 					var n = parseInt(p.parseData.s);
-					if (n == NaN) {
+					if (isNaN(n)) {
 						window.location.href = "../";
 					} else {
-						var s = Sorts.Sort.getSort(p.parseData.s);
-						console.debug(s);
+						var s = Sorts.Sort.getSort(n);
+						if (s) {
+							$("h1").text(s.meta.name+" - Sorts");
+							$("#edit-link").attr("href", "edit/?s="+n.toString());
+							var e = [];
+							var loopFor = 0;
+							var h = $("<tr></tr>");
+							for (var c in s.sortColumns) {
+								var tea = [];
+								for (var t in s.sortColumns[c].terms) {
+									var te = $("<td class='term'>"+s.sortColumns[c].terms[t].text+"</td>");
+									if (t.isBold) {
+										te.attr("class", "term bold-term");
+									}
+									tea.push(te);
+								}
+								h.append($("<td>"+s.sortColumns[c].name+"</td>"));
+								e.push(tea);
+								if (s.sortColumns[c].terms.length > loopFor) {
+									loopFor = s.sortColumns[c].terms.length;
+								}
+							}
+							
+							$("#sort thead").append(h);
+							
+							var tb = $("#sort tbody");
+							for (var i = 0; i < loopFor; i++) {
+								var r = $("<tr></tr>");
+								for (var te in e) {
+									if (e[te][i]) {
+										r.append(e[te][i]);
+									} else {
+										r.append("<td></td>");
+									}
+								}
+								tb.append(r);
+							}
+						} else {
+							window.location.href = "../";
+						}
 					}
 				} else {
 					// Redirect
@@ -24,6 +62,20 @@
 		</script>
 	</head>
 	<body>
-		
+		<header>
+			<p><a href="../" class="button">&lt; Back to Sorts</a>
+			 | 
+			<a href="edit/" id="edit-link" class="button">Edit</a></p>
+			<h1>Sort</h1>
+		</header>
+		<select id="activity" class="large-select">
+			<option value="0" checked>Activities</option>
+		</select>
+		<table id="sort" class="sort-table">
+			<thead>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
 	</body>
 </html>
