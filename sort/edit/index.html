@@ -10,16 +10,18 @@
 			function getControlHtml(c, t) {
 				if (t) {
 					return "<p><button onClick='deleteTerm("+c+","+t+")'>Delete</button></p>";
+				} else {
+					var p1 = "<p><button onClick='addTerm("+c+")'>Add Term</button></p>";
+					var p2 = "<p><button onClick='deleteColumn("+c+")'>Delete</button></p>";
+					return p1+p2;
 				}
 			}
 			function refreshSort() {	
 				if (window.sort) {
 					$("h1").text(window.sort.meta.name+" - Sort Editor");
 					$("title").text(window.sort.meta.name+" - Sort Editor");
-					$("#sort").remove();
-					$('<table id="sort" class="sort-table">').appendTo($("body"));
-					$('<thead></thead>').appendTo($("#sort"));
-					$('<tbody></tbody>').appendTo($("#sort"));
+					$("#sort thead").empty();
+					$("#sort tbody").empty();
 					var e = [];
 					var loopFor = 0;
 					var h = $("<tr></tr>");
@@ -36,7 +38,12 @@
 							tea.push(te);
 						}
 						var func = "sortColumnNameDidChange(this,"+c+","+t+")";
-						h.append($("<td><p><input type='text' class='bold' onchange='"+func+"' value='"+window.sort.sortColumns[c].name+"'></p></input></td>"));
+						var he = $("<td></td>");
+						var hep = $("<p></p>");
+						hep.append("<input type='text' class='bold' onchange='"+func+"' value='"+window.sort.sortColumns[c].name+"'>");
+						he.append(hep);
+						he.append(getControlHtml(c));
+						h.append(he);
 						e.push(tea);
 						if (window.sort.sortColumns[c].terms.length > loopFor) {
 							loopFor = window.sort.sortColumns[c].terms.length;
@@ -122,6 +129,18 @@
 			function deleteTerm(c, t) {
 				if (window.sort.sortColumns[c].terms[t]) {
 					window.sort.sortColumns[c].terms.splice(t, 1);
+				}
+				refreshSort();
+			}
+			function addTerm(c) {
+				if (window.sort.sortColumns[c]) {
+					window.sort.sortColumns[c].terms.push(new Sorts.SortTerm("Term"));
+				}
+				refreshSort();
+			}
+			function deleteColumn(c) {
+				if (window.sort.sortColumns[c]) {
+					window.sort.sortColumns.splice(c, 1);
 				}
 				refreshSort();
 			}
