@@ -1,0 +1,13 @@
+[
+	{
+		"id": "SortsSpell",
+		"name": "Spell",
+		"source": "spell.html"
+	},
+	
+	{
+		"id": "SortsSort",
+		"name": "Sort",
+		"source": "sort.html"
+	}
+]

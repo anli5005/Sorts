@@ -7,6 +7,11 @@
 		<script src="../apis/jQuery.js" type="text/javascript"></script>
 		<script src="../apis/Sorts.js" type="text/javascript"></script>
 		<script>
+			function activity(e) {
+				if (e.value != "0") {
+					window.location.href = "activities/?a="+e.value;
+				}
+			}
 			$(document).ready(function () {
 				var p = Sorts.parseParams(window.location.search);
 				if (p.parseData.s) {
@@ -60,6 +65,24 @@
 					// Redirect
 					window.location.href = "../";
 				}
+				$.get("activities/a.json", function (data) {
+					var p = Sorts.JSON.parse(data);
+					if (p.parseData) {
+						$("#activity option[selected]").text("Activities");
+						var a = p.parseData;
+						for (var k in a) {
+							var oe = $("<option></option>");
+							oe.attr("value", a[k].id);
+							oe.text(a[k].name);
+							$("#activity").append(oe);
+						}
+					} else {
+						$("#activity option[selected]").text("Cannot Get Activities");
+						if (p.error) {
+							Sorts.Log.logError(p.error);
+						}
+					}
+				});
 			});
 		</script>
 	</head>
@@ -70,8 +93,8 @@
 			<a href="edit/" id="edit-link" class="button">Edit</a></p>
 			<h1>Sort</h1>
 		</header>
-		<select id="activity" class="large-select">
-			<option value="0" checked>Activities</option>
+		<select id="activity" class="large-select" onChange="activity(this)">
+			<option value="0" selected>Loading Activities...</option>
 		</select>
 		<table id="sort" class="sort-table">
 			<thead>
