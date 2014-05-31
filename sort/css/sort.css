@@ -22,6 +22,10 @@ table.sort-table {
 	margin-right: auto;
 }
 
+table.sort-table input {
+	border: none;
+}
+
 table.sort-table tr td {
 	padding: 0.5em 0.5em 0.5em 0.5em;
 }
