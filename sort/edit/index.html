@@ -30,7 +30,9 @@
 						for (var t in window.sort.sortColumns[c].terms) {
 							var te = $("<td class='term'></td>");
 							var func = "sortTermNameDidChange(this,"+c+","+t+")";
-							te.append("<p><input type='text' onchange='"+func+"' value='"+window.sort.sortColumns[c].terms[t].text+"'></input></p>");
+							var f = $("<input type='text' onchange='"+func+"'></input>");
+							f.attr("value", window.sort.sortColumns[c].terms[t].text);
+							te.append($("<p></p>").append(f));
 							te.append(getControlHtml(c, t));
 							if (t.isBold) {
 								te.attr("class", "term bold-term");

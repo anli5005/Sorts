@@ -31,7 +31,8 @@
 							for (var c in s.sortColumns) {
 								var tea = [];
 								for (var t in s.sortColumns[c].terms) {
-									var te = $("<td class='term'>"+s.sortColumns[c].terms[t].text+"</td>");
+									var te = $("<td class='term'></td>");
+									te.text(s.sortColumns[c].terms[t].text);
 									if (t.isBold) {
 										te.attr("class", "term bold-term");
 									}
