@@ -11,19 +11,26 @@
 				if (window.sort) {
 					$("h1").text(window.sort.meta.name+" - Sort Editor");
 					$("title").text(window.sort.meta.name+" - Sort Editor");
+					$("#sort").remove();
+					$('<table id="sort" class="sort-table">').appendTo($("body"));
+					$('<thead></thead>').appendTo($("#sort"));
+					$('<tbody></tbody>').appendTo($("#sort"));
 					var e = [];
 					var loopFor = 0;
 					var h = $("<tr></tr>");
 					for (var c in window.sort.sortColumns) {
 						var tea = [];
 						for (var t in window.sort.sortColumns[c].terms) {
-							var te = $("<td class='term'>"+window.sort.sortColumns[c].terms[t].text+"</td>");
+							var te = $("<td class='term'></td>");
+							var func = "sortTermNameDidChange(this,"+c+","+t+")";
+							te.append("<input type='text' onchange='"+func+"' value='"+window.sort.sortColumns[c].terms[t].text+"'></input>");
 							if (t.isBold) {
 								te.attr("class", "term bold-term");
 							}
 							tea.push(te);
 						}
-						h.append($("<td>"+window.sort.sortColumns[c].name+"</td>"));
+						var func = "sortColumnNameDidChange(this,"+c+","+t+")";
+						h.append($("<td><input type='text' class='bold' onchange='"+func+"' value='"+window.sort.sortColumns[c].name+"'></input></td>"));
 						e.push(tea);
 						if (window.sort.sortColumns[c].terms.length > loopFor) {
 							loopFor = window.sort.sortColumns[c].terms.length;
@@ -88,6 +95,24 @@
 				}
 				refreshSort();
 			}
+			
+			function sortAddColumn() {
+				if (window.sort) {
+					window.sort.sortColumns.push(new Sorts.SortColumn("Column"));
+				}
+				refreshSort();
+			}
+			
+			function sortTermNameDidChange(e, c, t) {
+				if (window.sort.sortColumns[c].terms[t]) {
+					window.sort.sortColumns[c].terms[t].text = e.value;
+				}
+			}
+			function sortColumnNameDidChange(e, c) {
+				if (window.sort.sortColumns[c]) {
+					window.sort.sortColumns[c].name = e.value;
+				}
+			}
 		</script>
 	</head>
 	<body>
@@ -96,7 +121,7 @@
 			<h1>Sort</h1>
 		</header>
 		<p>Name: <input type="text" id="sortName" onchange="sortNameDidChange()"/></p>
-		<p><input type="submit" value="Add Column"/></p>
+		<p><input type="submit" value="Add Column" onclick="sortAddColumn()"/></p>
 		<table id="sort" class="sort-table">
 			<thead>
 			</thead>
