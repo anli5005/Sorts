@@ -9,7 +9,7 @@
 		<script>
 			function activity(e) {
 				if (e.value != "0") {
-					window.location.href = "activities/?a="+e.value;
+					window.location.href = "activities/?s="+window.sortNumber+"&a="+e.value;
 				}
 			}
 			$(document).ready(function () {
@@ -19,6 +19,7 @@
 					if (isNaN(n)) {
 						window.location.href = "../";
 					} else {
+						window.sortNumber = n;
 						var s = Sorts.Sort.getSort(n);
 						if (s) {
 							$("h1").text(s.meta.name+" - Sorts");
