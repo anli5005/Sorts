@@ -32,6 +32,7 @@ a:hover, a:active, a:focus,
 a.button:hover, a.button:active, a.button:focus {
 	color: #00CCFF;
 	text-decoration: underline;
+	cursor: pointer;
 }
 
 table, tr, td {
@@ -75,6 +76,7 @@ input[type="submit"], input[type="reset"], button {
 	padding: 0.25em 0.25em 0.25em 0.25em;
 	border: none;
 	cursor: pointer;
+	font-family: "Helvetica Neue", helvetica, arial, sans-serif;
 }
 
 input[type="submit"]:hover, input[type="reset"]:hover, button:hover {
