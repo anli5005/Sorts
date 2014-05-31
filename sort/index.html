@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/sort.css" type="text/css">
+		<title>Sort</title>
 		
 		<script src="../apis/jQuery.js" type="text/javascript"></script>
 		<script src="../apis/Sorts.js" type="text/javascript"></script>
@@ -16,6 +17,7 @@
 						var s = Sorts.Sort.getSort(n);
 						if (s) {
 							$("h1").text(s.meta.name+" - Sorts");
+							$("title").text(s.meta.name+" - Sorts");
 							$("#edit-link").attr("href", "edit/?s="+n.toString());
 							var e = [];
 							var loopFor = 0;
