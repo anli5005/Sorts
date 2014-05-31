@@ -55,7 +55,7 @@
 			function saveAndClose() {
 				sortNameDidChange();
 				saveSort(false);
-				if (window.sort.sortNumber) {
+				if ((window.sort.sortNumber) || (window.sort.sortNumber == 0)) {
 					window.location.href = "../?s="+window.sort.sortNumber;
 				} else {
 					window.location.href = "../";
