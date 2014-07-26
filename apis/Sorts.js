@@ -197,15 +197,16 @@ Sorts.removeSort = function (num) {
 Sorts.saveSort = function (sort) {
 	if (sort.sortNumber != null) {
 		if (Sorts.getAllSorts().parseData) {
-			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
+			if (localStorage.getItem(Sorts.getSortName(sort.sortNumber))) {
 				// Save the sort
 				localStorage.setItem(Sorts.getSortName(sort.sortNumber), sort.stringify());
 				localStorage.setItem(
 					Sorts.SortMeta.metaNameForSort(Sorts.getSortName(sort.sortNumber)),
 					sort.meta.stringify()
 				);
+				return saveIndex;
 			} else {
-				return new Error("No such sort exists");
+				return new Error("Sort "+sort.sortNumber+" dosen't exist!")
 			}
 		} else {
 			return Sorts.getAllSorts().error;
@@ -230,10 +231,11 @@ Sorts.saveSort = function (sort) {
 		current.push(saveIndex);
 		localStorage.sort_all = Sorts.JSON.stringify(current);
 		sort.sortNumber = saveIndex;
-		var err = Sorts.saveSort(sort);
-		if (err) {
-			return err;
-		}
+		localStorage.setItem(Sorts.getSortName(saveIndex), sort.stringify());
+		localStorage.setItem(
+			Sorts.SortMeta.metaNameForSort(Sorts.getSortName(saveIndex)),
+			sort.meta.stringify()
+		);
 		return saveIndex;
 	}
 }
