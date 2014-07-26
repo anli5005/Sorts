@@ -180,31 +180,33 @@ Sorts.removeSort = function (num) {
 		return current.error;
 	}
 	var removed;
-	if (current.parseData) {
-		if (current.parseData.indexOf(num) == -1) {
-			return new Error("There is no such sort as sort "+num);
+	if (localStorage.getItem(Sorts.getSortName(num))) {
+		if (current.parseData) {
+			current.parseData.splice(current.parseData.indexOf(num), 1);
 		}
-		current.parseData.splice(current.parseData.indexOf(num), 1);
 	} else {
-		return new Error("There is no such sort as sort "+num);
+		return new Error("Sort "+num+" dosen't exist!")
 	}
 	localStorage.removeItem(Sorts.getSortName(num));
 	localStorage.removeItem(Sorts.SortMeta.metaNameForSort(Sorts.getSortName(num)));
-	localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
+	if (current.parseData) {
+		localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
+	}
 }
 
 Sorts.saveSort = function (sort) {
 	if (sort.sortNumber != null) {
 		if (Sorts.getAllSorts().parseData) {
-			if (Sorts.getAllSorts().parseData.indexOf(sort.sortNumber) != -1) {
+			if (localStorage.getItem(Sorts.getSortName(sort.sortNumber))) {
 				// Save the sort
 				localStorage.setItem(Sorts.getSortName(sort.sortNumber), sort.stringify());
 				localStorage.setItem(
 					Sorts.SortMeta.metaNameForSort(Sorts.getSortName(sort.sortNumber)),
 					sort.meta.stringify()
 				);
+				return saveIndex;
 			} else {
-				return new Error("No such sort exists");
+				return new Error("Sort "+sort.sortNumber+" dosen't exist!")
 			}
 		} else {
 			return Sorts.getAllSorts().error;
@@ -229,10 +231,11 @@ Sorts.saveSort = function (sort) {
 		current.push(saveIndex);
 		localStorage.sort_all = Sorts.JSON.stringify(current);
 		sort.sortNumber = saveIndex;
-		var err = Sorts.saveSort(sort);
-		if (err) {
-			return err;
-		}
+		localStorage.setItem(Sorts.getSortName(saveIndex), sort.stringify());
+		localStorage.setItem(
+			Sorts.SortMeta.metaNameForSort(Sorts.getSortName(saveIndex)),
+			sort.meta.stringify()
+		);
 		return saveIndex;
 	}
 }
