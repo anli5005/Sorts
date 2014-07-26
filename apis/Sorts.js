@@ -180,17 +180,18 @@ Sorts.removeSort = function (num) {
 		return current.error;
 	}
 	var removed;
-	if (current.parseData) {
-		if (current.parseData.indexOf(num) == -1) {
-			return new Error("There is no such sort as sort "+num);
+	if (localStorage.getItem(Sorts.getSortName(num))) {
+		if (current.parseData) {
+			current.parseData.splice(current.parseData.indexOf(num), 1);
 		}
-		current.parseData.splice(current.parseData.indexOf(num), 1);
 	} else {
-		return new Error("There is no such sort as sort "+num);
+		return new Error("Sort "+num+" dosen't exist!")
 	}
 	localStorage.removeItem(Sorts.getSortName(num));
 	localStorage.removeItem(Sorts.SortMeta.metaNameForSort(Sorts.getSortName(num)));
-	localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
+	if (current.parseData) {
+		localStorage.setItem("sort_all", Sorts.JSON.stringify(current.parseData));
+	}
 }
 
 Sorts.saveSort = function (sort) {
